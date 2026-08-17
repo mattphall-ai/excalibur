@@ -1,6 +1,6 @@
-# Float Scheduling Dashboard
+# Studio Rx Content Schedule
 
-A small tool for querying and monitoring your team's schedule in
+A small tool for querying and monitoring Studio Rx's content schedule in
 [Float](https://www.float.com), built around two areas:
 
 1. **Chat** — ask natural-language questions about clients, projects,
@@ -14,33 +14,30 @@ A small tool for querying and monitoring your team's schedule in
 
 ## Data source: temporary sample data
 
-There's no Float MCP connection configured yet, so the app currently runs on
+There's no Float connection configured yet, so the app currently runs on
 hand-written sample data shaped like Float's real entities (clients,
 departments, people, projects, allocations). Every component talks to a
 single `FloatClient` interface in `src/lib/floatClient.ts` — nothing outside
 that file knows the data is fake.
 
-**To connect a real Float account:**
+**To connect the real Float account, using Float's own hosted MCP (beta):**
 
-1. Set up a Float MCP server — either Float's own
-   [MCP (beta)](https://support.float.com/en/articles/12688168-float-mcp-beta)
-   or the community
-   [`asachs01/float-mcp`](https://github.com/asachs01/float-mcp) server. The
-   community server exposes four consolidated tools: `manage-entity` (people,
-   projects, clients, departments, roles, statuses), `manage-project-workflow`
-   (phases, milestones, tasks, allocations), `manage-time-tracking` (logged
-   time, time off, timesheets), and `generate-report` (utilization, capacity,
-   budget reports).
+1. Have a Float admin enable [Float MCP (beta)](https://support.float.com/en/articles/12688168-float-mcp-beta)
+   on the account and provide the connection details.
 2. Implement a `RealFloatClient` in `src/lib/floatClient.ts` that satisfies
-   the existing `FloatClient` interface, backed by MCP tool calls instead of
-   `mockFloatData.ts`.
+   the existing `FloatClient` interface, backed by calls through Float's MCP
+   instead of `mockFloatData.ts`.
 3. For the chat area specifically, route `ask(question)` through an LLM with
-   the Float MCP tools bound to it, replacing the keyword-matching
-   `askMock()` stand-in.
+   Float's MCP tools bound to it, replacing the keyword-matching `askMock()`
+   stand-in.
 4. Swap the exported `floatClient` singleton from the mock implementation to
    `RealFloatClient`. No component changes are required — `ChatPanel`,
    `ClientProjectWidget`, and `SyntheticWidget` only ever call the
    `FloatClient` interface.
+
+Because this app is a static SPA with no backend, the MCP connection (and any
+Float credentials) needs to be brokered through a small server or the MCP
+client itself — never called directly from the browser.
 
 ## Stack
 

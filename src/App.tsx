@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div className="app">
       <div className="app-header">
-        <h1>Float Scheduling Dashboard</h1>
+        <h1>Studio Rx Content Schedule</h1>
       </div>
       <DataSourceBanner />
 

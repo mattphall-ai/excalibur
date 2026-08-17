@@ -5,20 +5,21 @@ import { mockSnapshot } from "../data/mockFloatData";
 // INTEGRATION SEAM
 // -----------------------------------------------------------------------
 // FloatClient is the only thing components talk to. Everything below
-// MockFloatClient is temporary. To wire up the real Float MCP server
-// (https://github.com/asachs01/float-mcp, or Float's own hosted MCP beta):
+// MockFloatClient is temporary. To wire up Float's own hosted MCP (beta)
+// (https://support.float.com/en/articles/12688168-float-mcp-beta):
 //
 //   1. Implement a `RealFloatClient` that satisfies this same interface,
-//      calling the MCP tools instead of reading mockSnapshot:
-//        - listClients/listDepartments/getProjectsFor*/getPeopleFor*
-//          -> `manage-entity` (read actions on clients/departments/people/projects)
-//        - getAllocationsForProject -> `manage-project-workflow`
-//        - ask(question) -> route the question through an LLM tool-calling
-//          loop with `manage-entity`, `manage-project-workflow`,
-//          `manage-time-tracking`, and `generate-report` bound as tools
-//          (this replaces the keyword matching in askMock below)
-//   2. Swap the export at the bottom of this file from `mockFloatClient`
+//      calling the MCP tools instead of reading mockSnapshot for people,
+//      projects, clients, departments, and allocations.
+//   2. For ask(question), route the question through an LLM with Float's
+//      MCP tools bound to it, replacing the keyword matching in askMock
+//      below.
+//   3. Swap the export at the bottom of this file from `mockFloatClient`
 //      to `realFloatClient`. No component changes needed.
+//
+// The MCP connection (and Float credentials) must be brokered through a
+// small server or the MCP client itself — this is a static SPA with no
+// backend, so it can never call Float directly with a credential in hand.
 // -----------------------------------------------------------------------
 
 export interface FloatClient {
