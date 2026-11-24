@@ -4,6 +4,15 @@
 
 export type ProjectStatus = "Active" | "Planned" | "On Hold" | "Completed";
 
+// A Float project stage (Settings > Project stages). Float projects carry a
+// numeric stage_id; get_project_stages_list resolves it to a team-defined
+// name such as "Proposed", "Awarded" or "In Progress".
+export interface ProjectStage {
+  id: string;
+  name: string;
+  sortOrder: number;
+}
+
 export interface Client {
   id: string;
   name: string;
@@ -27,6 +36,7 @@ export interface Project {
   name: string;
   clientId: string;
   status: ProjectStatus;
+  stageId: string;
   departmentIds: string[];
   projectManagerId: string;
   startDate: string; // ISO date
@@ -48,5 +58,6 @@ export interface FloatSnapshot {
   departments: Department[];
   people: Person[];
   projects: Project[];
+  stages: ProjectStage[];
   allocations: Allocation[];
 }
