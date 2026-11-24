@@ -1,4 +1,4 @@
-import type { Allocation, Client, Department, FloatSnapshot, Person, Project } from "../types/float";
+import type { Allocation, Client, Department, FloatSnapshot, Person, Project, ProjectStage } from "../types/float";
 
 // -----------------------------------------------------------------------
 // TEMPORARY SAMPLE DATA
@@ -44,21 +44,33 @@ export const people: Person[] = [
   { id: "p14", name: "Tom Reilly", role: "Account Manager", departmentId: "dep-accounts", email: "tom.reilly@agency.com" },
 ];
 
+// Mirrors the active stages configured in the team's Float account
+// (get_project_stages_list), in the team's own pipeline order.
+export const stages: ProjectStage[] = [
+  { id: "stage-1748", name: "Draft", sortOrder: 10 },
+  { id: "stage-1749", name: "Proposed", sortOrder: 20 },
+  { id: "stage-639624", name: "Hold", sortOrder: 21 },
+  { id: "stage-1750", name: "Awarded", sortOrder: 30 },
+  { id: "stage-639623", name: "In Progress", sortOrder: 31 },
+  { id: "stage-1751", name: "Completed", sortOrder: 40 },
+  { id: "stage-1752", name: "Canceled", sortOrder: 50 },
+];
+
 export const projects: Project[] = [
-  { id: "proj-acme-rebrand", name: "Acme Rebrand", clientId: "cl-acme", status: "Active", departmentIds: ["dep-creative", "dep-strategy"], projectManagerId: "p1", startDate: "2026-06-01", endDate: "2026-09-30", budgetHours: 480 },
-  { id: "proj-acme-support", name: "Acme Ongoing Support Retainer", clientId: "cl-acme", status: "Active", departmentIds: ["dep-engineering"], projectManagerId: "p3", startDate: "2026-01-01", endDate: "2026-12-31", budgetHours: 800 },
-  { id: "proj-acme-synth-pilot", name: "Acme Synthetic Data Pilot", clientId: "cl-acme", status: "Completed", departmentIds: ["dep-synthetic"], projectManagerId: "p6", startDate: "2026-03-01", endDate: "2026-06-15", budgetHours: 320 },
-  { id: "proj-globex-synth-model", name: "Globex Synthetic Demand Model", clientId: "cl-globex", status: "Active", departmentIds: ["dep-synthetic"], projectManagerId: "p5", startDate: "2026-07-01", endDate: "2026-10-15", budgetHours: 600 },
-  { id: "proj-globex-launch", name: "Globex Product Launch Campaign", clientId: "cl-globex", status: "Planned", departmentIds: ["dep-creative", "dep-accounts"], projectManagerId: "p2", startDate: "2026-09-01", endDate: "2026-12-01", budgetHours: 300 },
-  { id: "proj-globex-audit", name: "Globex Data Audit", clientId: "cl-globex", status: "On Hold", departmentIds: ["dep-strategy"], projectManagerId: "p7", startDate: "2026-05-01", endDate: "2026-07-15", budgetHours: 180 },
-  { id: "proj-initech-migration", name: "Initech Platform Migration", clientId: "cl-initech", status: "Active", departmentIds: ["dep-engineering"], projectManagerId: "p3", startDate: "2026-05-15", endDate: "2026-08-30", budgetHours: 520 },
-  { id: "proj-initech-synthdata", name: "Initech Synthetic Test Data", clientId: "cl-initech", status: "Active", departmentIds: ["dep-synthetic"], projectManagerId: "p6", startDate: "2026-06-01", endDate: "2026-09-01", budgetHours: 400 },
-  { id: "proj-umbrella-portal", name: "Umbrella Patient Portal", clientId: "cl-umbrella", status: "On Hold", departmentIds: ["dep-engineering", "dep-strategy"], projectManagerId: "p4", startDate: "2026-04-01", endDate: "2026-08-01", budgetHours: 350 },
-  { id: "proj-umbrella-synth-qa", name: "Umbrella Synthetic Records QA", clientId: "cl-umbrella", status: "Planned", departmentIds: ["dep-synthetic"], projectManagerId: "p6", startDate: "2026-09-15", endDate: "2026-11-30", budgetHours: 280 },
-  { id: "proj-stark-holiday", name: "Stark Holiday Campaign", clientId: "cl-stark", status: "Completed", departmentIds: ["dep-creative"], projectManagerId: "p2", startDate: "2026-02-01", endDate: "2026-05-01", budgetHours: 260 },
-  { id: "proj-stark-loyalty", name: "Stark Loyalty Program Strategy", clientId: "cl-stark", status: "Active", departmentIds: ["dep-strategy", "dep-accounts"], projectManagerId: "p7", startDate: "2026-07-15", endDate: "2026-10-30", budgetHours: 300 },
-  { id: "proj-wonka-synth-flavor", name: "Wonka Synthetic Flavor Panel Sim", clientId: "cl-wonka", status: "Active", departmentIds: ["dep-synthetic"], projectManagerId: "p5", startDate: "2026-08-01", endDate: "2026-11-15", budgetHours: 450 },
-  { id: "proj-wonka-brandbook", name: "Wonka Brand Guidelines Refresh", clientId: "cl-wonka", status: "Planned", departmentIds: ["dep-creative"], projectManagerId: "p1", startDate: "2026-10-01", endDate: "2026-12-15", budgetHours: 200 },
+  { id: "proj-acme-rebrand", name: "Acme Rebrand", clientId: "cl-acme", status: "Active", stageId: "stage-639623", departmentIds: ["dep-creative", "dep-strategy"], projectManagerId: "p1", startDate: "2026-06-01", endDate: "2026-09-30", budgetHours: 480 },
+  { id: "proj-acme-support", name: "Acme Ongoing Support Retainer", clientId: "cl-acme", status: "Active", stageId: "stage-1750", departmentIds: ["dep-engineering"], projectManagerId: "p3", startDate: "2026-01-01", endDate: "2026-12-31", budgetHours: 800 },
+  { id: "proj-acme-synth-pilot", name: "Acme Synthetic Data Pilot", clientId: "cl-acme", status: "Completed", stageId: "stage-1751", departmentIds: ["dep-synthetic"], projectManagerId: "p6", startDate: "2026-03-01", endDate: "2026-06-15", budgetHours: 320 },
+  { id: "proj-globex-synth-model", name: "Globex Synthetic Demand Model", clientId: "cl-globex", status: "Active", stageId: "stage-639623", departmentIds: ["dep-synthetic"], projectManagerId: "p5", startDate: "2026-07-01", endDate: "2026-10-15", budgetHours: 600 },
+  { id: "proj-globex-launch", name: "Globex Product Launch Campaign", clientId: "cl-globex", status: "Planned", stageId: "stage-1749", departmentIds: ["dep-creative", "dep-accounts"], projectManagerId: "p2", startDate: "2026-09-01", endDate: "2026-12-01", budgetHours: 300 },
+  { id: "proj-globex-audit", name: "Globex Data Audit", clientId: "cl-globex", status: "On Hold", stageId: "stage-639624", departmentIds: ["dep-strategy"], projectManagerId: "p7", startDate: "2026-05-01", endDate: "2026-07-15", budgetHours: 180 },
+  { id: "proj-initech-migration", name: "Initech Platform Migration", clientId: "cl-initech", status: "Active", stageId: "stage-639623", departmentIds: ["dep-engineering"], projectManagerId: "p3", startDate: "2026-05-15", endDate: "2026-08-30", budgetHours: 520 },
+  { id: "proj-initech-synthdata", name: "Initech Synthetic Test Data", clientId: "cl-initech", status: "Active", stageId: "stage-639623", departmentIds: ["dep-synthetic"], projectManagerId: "p6", startDate: "2026-06-01", endDate: "2026-09-01", budgetHours: 400 },
+  { id: "proj-umbrella-portal", name: "Umbrella Patient Portal", clientId: "cl-umbrella", status: "On Hold", stageId: "stage-639624", departmentIds: ["dep-engineering", "dep-strategy"], projectManagerId: "p4", startDate: "2026-04-01", endDate: "2026-08-01", budgetHours: 350 },
+  { id: "proj-umbrella-synth-qa", name: "Umbrella Synthetic Records QA", clientId: "cl-umbrella", status: "Planned", stageId: "stage-1749", departmentIds: ["dep-synthetic"], projectManagerId: "p6", startDate: "2026-09-15", endDate: "2026-11-30", budgetHours: 280 },
+  { id: "proj-stark-holiday", name: "Stark Holiday Campaign", clientId: "cl-stark", status: "Completed", stageId: "stage-1751", departmentIds: ["dep-creative"], projectManagerId: "p2", startDate: "2026-02-01", endDate: "2026-05-01", budgetHours: 260 },
+  { id: "proj-stark-loyalty", name: "Stark Loyalty Program Strategy", clientId: "cl-stark", status: "Active", stageId: "stage-1750", departmentIds: ["dep-strategy", "dep-accounts"], projectManagerId: "p7", startDate: "2026-07-15", endDate: "2026-10-30", budgetHours: 300 },
+  { id: "proj-wonka-synth-flavor", name: "Wonka Synthetic Flavor Panel Sim", clientId: "cl-wonka", status: "Active", stageId: "stage-1750", departmentIds: ["dep-synthetic"], projectManagerId: "p5", startDate: "2026-08-01", endDate: "2026-11-15", budgetHours: 450 },
+  { id: "proj-wonka-brandbook", name: "Wonka Brand Guidelines Refresh", clientId: "cl-wonka", status: "Planned", stageId: "stage-1748", departmentIds: ["dep-creative"], projectManagerId: "p1", startDate: "2026-10-01", endDate: "2026-12-15", budgetHours: 200 },
 ];
 
 export const allocations: Allocation[] = [
@@ -91,5 +103,6 @@ export const mockSnapshot: FloatSnapshot = {
   departments,
   people,
   projects,
+  stages,
   allocations,
 };

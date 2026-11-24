@@ -1,4 +1,4 @@
-import type { Allocation, Client, Department, FloatSnapshot, Person, Project, ProjectStatus } from "../types/float";
+import type { Allocation, Client, Department, FloatSnapshot, Person, Project, ProjectStage, ProjectStatus } from "../types/float";
 import { mockSnapshot } from "../data/mockFloatData";
 
 // -----------------------------------------------------------------------
@@ -10,7 +10,9 @@ import { mockSnapshot } from "../data/mockFloatData";
 //
 //   1. Implement a `RealFloatClient` that satisfies this same interface,
 //      calling the MCP tools instead of reading mockSnapshot for people,
-//      projects, clients, departments, and allocations.
+//      projects, clients, departments, and allocations. Project stages
+//      come from get_project_stages_list; map each project's stage_id
+//      to ProjectStage.id.
 //   2. For ask(question), route the question through an LLM with Float's
 //      MCP tools bound to it, replacing the keyword matching in askMock
 //      below.
@@ -46,6 +48,10 @@ function personName(people: Person[], id: string): string {
 
 function clientName(clients: Client[], id: string): string {
   return clients.find((c) => c.id === id)?.name ?? "Unknown client";
+}
+
+function stageName(stages: ProjectStage[], id: string): string {
+  return stages.find((s) => s.id === id)?.name ?? "No stage";
 }
 
 function departmentNames(departments: Department[], ids: string[]): string {
@@ -164,4 +170,4 @@ class MockFloatClient implements FloatClient {
 }
 
 export const floatClient: FloatClient = new MockFloatClient();
-export { personName, clientName, departmentNames };
+export { personName, clientName, departmentNames, stageName };
